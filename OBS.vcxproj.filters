@@ -163,6 +163,9 @@
     <ClCompile Include="Source\Service.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Login.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\D3D10System.h">
@@ -210,9 +213,6 @@
     <ClInclude Include="Source\LogUploader.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClCompile Include="Source\DataPacketHelpers.h">
-      <Filter>Headers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cursor1.cur">
@@ -266,9 +266,6 @@
     <None Include="ui\test2\recording.ico">
       <Filter>Resources</Filter>
     </None>
-    <None Include="rundir\shaders\SceneTransition.pShader">
-      <Filter>Shaders</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -292,5 +289,13 @@
     <ResourceCompile Include="OBS.rc">
       <Filter>Resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ui\icon3.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="ui\icon4.ico">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

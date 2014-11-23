@@ -130,7 +130,7 @@ failure:
     return ret;
 }
 
-String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode)
+String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode, String verb)
 {
     HINTERNET hSession = NULL;
     HINTERNET hConnect = NULL;
@@ -138,6 +138,8 @@ String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode)
     URL_COMPONENTS  urlComponents;
     BOOL secure = FALSE;
 	String result = "";
+	String body = TEXT("");
+	String nurl = url;
 
     String hostName, path;
 
@@ -145,6 +147,12 @@ String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode)
         TEXT("*/*"),
         NULL
     };
+
+	if (verb == TEXT("POST")){
+		CTSTR s = srchr(url, TEXT('?'));
+		body = String(s + 1);
+		nurl = nurl.Left(s - url);
+	}
 
     hostName.SetLength(256);
     path.SetLength(1024);
@@ -159,12 +167,12 @@ String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode)
     urlComponents.lpszUrlPath = path;
     urlComponents.dwUrlPathLength = path.Length();
 
-    WinHttpCrackUrl(url, 0, 0, &urlComponents);
+	WinHttpCrackUrl(nurl, 0, 0, &urlComponents);
 
     if (urlComponents.nPort == 443)
         secure = TRUE;
 
-    hSession = WinHttpOpen(OBS_VERSION_STRING, WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
+    hSession = WinHttpOpen(TEXT("gecko test"), WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
     if (!hSession)
         goto failure;
 
@@ -172,11 +180,12 @@ String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode)
     if (!hConnect)
         goto failure;
 
-    hRequest = WinHttpOpenRequest(hConnect, TEXT("GET"), path, NULL, WINHTTP_NO_REFERER, acceptTypes, secure ? WINHTTP_FLAG_SECURE|WINHTTP_FLAG_REFRESH : WINHTTP_FLAG_REFRESH);
+    hRequest = WinHttpOpenRequest(hConnect, verb, path, NULL, WINHTTP_NO_REFERER, acceptTypes, secure ? WINHTTP_FLAG_SECURE|WINHTTP_FLAG_REFRESH : WINHTTP_FLAG_REFRESH);
     if (!hRequest)
         goto failure;
 
-    BOOL bResults = WinHttpSendRequest(hRequest, extraHeaders, extraHeaders ? -1 : 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
+    BOOL bResults = WinHttpSendRequest(hRequest, extraHeaders, extraHeaders ? -1 : 0, body.Array(), 
+		body.Length(), body.Length(), 0);
 
     // End the request.
     if (bResults)

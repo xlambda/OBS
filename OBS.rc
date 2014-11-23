@@ -69,43 +69,32 @@ STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_SYSMENU
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    RTEXT           "Settings.Publish.Mode",IDC_STATIC,4,12,138,8
-    COMBOBOX        IDC_MODE,144,10,126,59,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "Settings.Publish.Service",IDC_SERVICE_STATIC,4,29,138,8
-    COMBOBOX        IDC_SERVICE,144,27,126,59,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Browse",IDC_BROWSEUSERSERVICES,275,27,95,14,NOT WS_TABSTOP
-    RTEXT           "Settings.Publish.Server",IDC_SERVER_STATIC,4,46,138,8
-    EDITTEXT        IDC_URL,144,43,278,14,ES_AUTOHSCROLL
-    RTEXT           "Settings.Publish.Playpath",IDC_PLAYPATH_STATIC,4,62,138,8
-    EDITTEXT        IDC_PLAYPATH,144,60,278,14,ES_PASSWORD | ES_AUTOHSCROLL
     CONTROL         "Settings.Publish.AutoReconnect",IDC_AUTORECONNECT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,77,145,10,WS_EX_RIGHT
-    RTEXT           "Settings.Publish.AutoReconnectTimeout",IDC_AUTORECONNECT_TIMEOUT_STATIC,4,94,138,8
-    EDITTEXT        IDC_AUTORECONNECT_TIMEOUT_EDIT,143,91,40,14,ES_AUTOHSCROLL
-    CONTROL         "",IDC_AUTORECONNECT_TIMEOUT,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,185,91,11,14
-    LTEXT           "Settings.Publish.Delay",IDC_DELAY_STATIC,197,94,184,8,0,WS_EX_RIGHT
-    EDITTEXT        IDC_DELAY_EDIT,382,91,40,14,ES_AUTOHSCROLL
-    CONTROL         "",IDC_DELAY,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,421,91,11,14
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,20,145,10,WS_EX_RIGHT
+    RTEXT           "Settings.Publish.AutoReconnectTimeout",IDC_AUTORECONNECT_TIMEOUT_STATIC,4,37,138,8
+    EDITTEXT        IDC_AUTORECONNECT_TIMEOUT_EDIT,143,34,40,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_AUTORECONNECT_TIMEOUT,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,185,34,11,14
+    LTEXT           "Settings.Publish.Delay",IDC_DELAY_STATIC,197,37,184,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_DELAY_EDIT,382,34,40,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_DELAY,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,421,34,11,14
     CONTROL         "Settings.Publish.LowLatencyMode",IDC_LOWLATENCYMODE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,110,145,10,WS_EX_RIGHT
-    CONTROL         "Settings.Publish.SaveToFile",IDC_SAVETOFILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,126,145,10,WS_EX_RIGHT
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,53,145,10,WS_EX_RIGHT
+    CONTROL         "Settings.Publish.SaveToFile",IDC_SAVETOFILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,69,145,10,WS_EX_RIGHT
     CONTROL         "Settings.Publish.KeepRecording",IDC_KEEPRECORDING,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,156,126,266,10,WS_EX_RIGHT
-    RTEXT           "Settings.Publish.SavePath",IDC_SAVEPATH_STATIC,7,144,133,8
-    EDITTEXT        IDC_SAVEPATH,143,141,214,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "Browse",IDC_BROWSE,359,141,63,14
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,156,69,266,10,WS_EX_RIGHT
+    RTEXT           "Settings.Publish.SavePath",IDC_SAVEPATH_STATIC,7,87,133,8
+    EDITTEXT        IDC_SAVEPATH,143,84,214,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_BROWSE,359,84,63,14
     LTEXT           "Settings.Info",IDC_INFO,7,362,408,11,NOT WS_VISIBLE
-    COMBOBOX        IDC_SERVERLIST,144,43,226,59,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    RTEXT           ".FMS URL:",IDC_URL_STATIC,4,46,138,8
-    LTEXT           "Settings.Publish.ReplayBufferLength",IDC_REPLAYBUFFERLENGTH_STATIC,7,161,135,8,0,WS_EX_RIGHT
-    EDITTEXT        IDC_REPLAYBUFFERLENGTH_EDIT,144,158,40,14,ES_AUTOHSCROLL
-    CONTROL         "",IDC_REPLAYBUFFERLENGTH,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,186,158,11,14
-    RTEXT           "Settings.Publish.ReplayBufferMemory",IDC_REPLAYBUFFERMEMORY_STATIC,201,161,157,8
-    EDITTEXT        IDC_REPLAYBUFFERMEMORY,360,159,62,14,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
-    RTEXT           "Settings.Publish.ReplayBufferSavePath",IDC_REPLAYBUFFERSAVEPATH_STATIC,7,178,133,8
-    EDITTEXT        IDC_REPLAYBUFFERSAVEPATH,143,175,214,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "Browse",IDC_REPLAYBUFFERBROWSE,359,175,63,14
-    LTEXT           "Service Warnings Go Here",IDC_WARNINGS,7,193,408,163
+    EDITTEXT        IDC_REPLAYBUFFERLENGTH_EDIT,144,101,40,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_REPLAYBUFFERLENGTH,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,186,101,11,14
+    RTEXT           "Settings.Publish.ReplayBufferMemory",IDC_REPLAYBUFFERMEMORY_STATIC,201,104,157,8
+    EDITTEXT        IDC_REPLAYBUFFERMEMORY,360,102,62,14,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+    RTEXT           "Settings.Publish.ReplayBufferSavePath",IDC_REPLAYBUFFERSAVEPATH_STATIC,7,121,133,8
+    EDITTEXT        IDC_REPLAYBUFFERSAVEPATH,143,118,214,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_REPLAYBUFFERBROWSE,359,118,63,14
+    LTEXT           "Service Warnings Go Here",IDC_WARNINGS,7,136,408,163
+    LTEXT           "Settings.Publish.ReplayBufferLength",IDC_REPLAYBUFFERLENGTH_STATIC,7,104,135,8,0,WS_EX_RIGHT
 END
 
 IDD_SETTINGS_ENCODING DIALOGEX 0, 0, 427, 336
@@ -943,6 +932,7 @@ BEGIN
         MENUITEM "MainMenu.File.OpenRecordingsFolder", ID_RECORDINGSFOLDER
         MENUITEM "MainMenu.File.ShowSavedReplayBuffers", ID_SAVEDREPLAYBUFFERS
         MENUITEM SEPARATOR
+        MENUITEM "MainMenu.File.Logout",        ID_LOGOUT
         MENUITEM "MainMenu.File.Exit",          ID_FILE_EXIT
     END
     POPUP "MainMenu.Settings"
@@ -954,36 +944,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "MainMenu.Settings.OpenConfigFolder", ID_SETTINGS_OPENCONFIGFOLDER
     END
-    POPUP "MainMenu.Profiles"
-    BEGIN
-        MENUITEM "nothing here",                ID_MAINMENU_NOTHINGHERE
-    END
-    POPUP "MainMenu.SceneCollection"
-    BEGIN
-        MENUITEM "MainMenu.SceneCollection.New", ID_SCENECOLLECTION_NEW
-        MENUITEM "MainMenu.SceneCollection.Duplicate", ID_SCENECOLLECTION_CLONE
-        MENUITEM "MainMenu.SceneCollection.Rename", ID_SCENECOLLECTION_RENAME
-        MENUITEM "MainMenu.SceneCollection.Remove", ID_SCENECOLLECTION_REMOVE
-        MENUITEM SEPARATOR
-        MENUITEM "MainMenu.SceneCollection.Import", ID_SCENECOLLECTION_IMPORT
-        MENUITEM "MainMenu.SceneCollection.Export", ID_SCENECOLLECTION_EXPORT
-        MENUITEM SEPARATOR
-        MENUITEM "nothing here",                ID_MAINMENU_NOTHINGHERE
-    END
     POPUP "MainMenu.Help"
     BEGIN
         MENUITEM "MainMenu.Help.VisitWebsite",  ID_HELP_VISITWEBSITE
-        MENUITEM "MainMenu.Help.OpenHelp",      ID_HELP_OPENHELP
-        MENUITEM SEPARATOR
-        MENUITEM "MainMenu.Settings.ShowLogWindow", ID_SHOWLOG
-        POPUP "MainMenu.Help.LogFiles"
-        BEGIN
-            MENUITEM "MainMenu.Help.AnalyzeCurrentLog", ID_HELP_ANALYZE_CURRENT_LOG, INACTIVE
-            MENUITEM "MainMenu.Help.UploadCurrentLog", ID_HELP_UPLOAD_CURRENT_LOG, INACTIVE
-        END
-        MENUITEM "MainMenu.Settings.OpenLogFolder", ID_SETTINGS_OPENLOGFOLDER
-        MENUITEM SEPARATOR
-        MENUITEM "MainMenu.Help.CheckForUpdates", ID_HELP_CHECK_FOR_UPDATES
+        MENUITEM "MainMenu.Help.Preview",       ID_HELP_PREVIEW
     END
 END
 
@@ -995,6 +959,64 @@ END
 
 IDC_COLORPICKER         CURSOR                  "cursor1.cur"
 #endif    // Japanese (Japan) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Simplified, PRC) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_LOGIN DIALOGEX 0, 0, 279, 134
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Login"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Login.Login",ID_LOGIN,73,88,79,25
+    LTEXT           "Login.Account",IDC_STATIC,23,20,61,13
+    LTEXT           "Login.Password",IDC_STATIC,22,41,64,13
+    EDITTEXT        IDC_EDIT1,91,18,119,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,91,38,119,13,ES_PASSWORD | ES_AUTOHSCROLL
+    CONTROL         "Login.RememberPassword",IDC_REMEMBER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,62,106,20
+    CONTROL         "Login.AutoLogin",IDC_AUTOLOGIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,137,63,106,20
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_LOGIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 127
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON3               ICON                    "ui\\icon3.ico"
+#endif    // Chinese (Simplified, PRC) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

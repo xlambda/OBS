@@ -7,6 +7,7 @@
 #define IDC_APPLY                       4
 #define IDC_OPTIMIZE                    5
 #define IDD_SETTINGS                    101
+#define IDI_ICON3                       102
 #define IDI_ICON1                       109
 #define IDI_SOUND_MIC                   110
 #define IDI_SOUND_MIC_MUTED             111
@@ -42,6 +43,7 @@
 #define IDD_SETTINGS_HOTKEYS            149
 #define IDD_SETTINGS_QSV                150
 #define IDD_GLOBAL_SOURCES_IMPORT       151
+#define IDD_LOGIN                       154
 #define IDC_SETTINGSLIST                1006
 #define IDC_SUBDIALOG                   1007
 #define IDC_MODE                        1008
@@ -108,12 +110,14 @@
 #define IDC_USETEXTEXTENTS              1041
 #define IDC_CUSTOMBUFFER                1041
 #define IDC_NOTIFICATIONICON            1041
+#define IDC_REMEMBER                    1041
 #define IDC_SERVEREDIT                  1042
 #define IDC_USESENDBUFFER               1042
 #define IDC_FORCEMONO                   1042
 #define IDC_SCROLLSPEED                 1042
 #define IDC_OPACITY2                    1042
 #define IDC_DISABLEFADING               1042
+#define IDC_AUTOLOGIN                   1042
 #define IDC_CHANNELNAME_STATIC          1043
 #define IDC_EXTENTWIDTH_EDIT            1043
 #define IDC_URL_STATIC                  1043
@@ -184,6 +188,7 @@
 #define IDC_MICBOOST                    1079
 #define IDC_TEXTSIZE                    1079
 #define IDC_AUDIOTIMEADJUST             1079
+#define IDC_EDIT3                       1079
 #define IDC_AUTORECONNECT_TIMEOUT_STATIC 1080
 #define IDC_TEXTOPACITY_EDIT            1080
 #define IDC_PTTDELAY_EDIT               1080
@@ -370,6 +375,7 @@
 #define IDC_USECUSTOMPARAMS             1207
 #define IDC_USEGLOBALBITRATE            1208
 #define IDC_USEGLOBALBUFFERSIZE         1209
+#define ID_LOGIN                        1209
 #define IDC_IMPORT                      1210
 #define IDA_SOURCE_MOVEUP               40018
 #define IDA_SOURCE_MOVEDOWN             40019
@@ -433,14 +439,19 @@
 #define ID_SCENECOLLECTION_IMPORT       40079
 #define ID_SCENECOLLECTION_EXPORT       40080
 #define ID_SAVEDREPLAYBUFFERS           40081
+#define ID_Menu                         40082
+#define ID_MAINMENU_MAINMENU40083       40083
+#define ID_LOGOUT                       40084
+#define ID_MAINMENU_MAINMENU40085       40085
+#define ID_HELP_PREVIEW                 40086
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        152
-#define _APS_NEXT_COMMAND_VALUE         40082
-#define _APS_NEXT_CONTROL_VALUE         1209
+#define _APS_NEXT_RESOURCE_VALUE        155
+#define _APS_NEXT_COMMAND_VALUE         40087
+#define _APS_NEXT_CONTROL_VALUE         1210
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

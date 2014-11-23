@@ -628,13 +628,11 @@ class OBS
     Texture         *mainRenderTextures[NUM_RENDER_BUFFERS];
     Texture         *yuvRenderTextures[NUM_RENDER_BUFFERS];
 
-    Texture *lastRenderTexture;
     Texture *transitionTexture;
-
     bool    bTransitioning;
     float   transitionAlpha;
 
-    Shader  *mainVertexShader, *mainPixelShader, *yuvScalePixelShader, *transitionPixelShader;
+    Shader  *mainVertexShader, *mainPixelShader, *yuvScalePixelShader;
     Shader  *solidVertexShader, *solidPixelShader;
 
     //---------------------------------------------------
@@ -1070,7 +1068,11 @@ private:
     static LRESULT CALLBACK LogWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
     static LRESULT CALLBACK OBSProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-    static INT_PTR CALLBACK SettingsDialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static INT_PTR CALLBACK SettingsDialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+public:
+	static INT_PTR CALLBACK LoginDialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+	// Ñ¡Ôñ¿Î³Ì´°¿Ú
+	static INT_PTR CALLBACK SelectDialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
     void ResizeRenderFrame(bool bRedrawRenderFrame);
     void UpdateRenderViewMessage();

@@ -525,13 +525,17 @@ void OBS::DrawPreview(const Vect2 &renderFrameSize, const Vect2 &renderFrameOffs
         ClearColorBuffer(GetSysColor(COLOR_BTNFACE));
 
     if(bTransitioning)
+    {
+        BlendFunction(GS_BLEND_ONE, GS_BLEND_ZERO);
         DrawSprite(transitionTexture, 0xFFFFFFFF,
                 renderFrameOffset.x, renderFrameOffset.y,
                 renderFrameOffset.x + renderFrameSize.x, renderFrameOffset.y + renderFrameSize.y);
-    else
-        DrawSprite(mainRenderTextures[curRenderTarget], 0xFFFFFFFF,
-                renderFrameOffset.x, renderFrameOffset.y,
-                renderFrameOffset.x + renderFrameSize.x, renderFrameOffset.y + renderFrameSize.y);
+        BlendFunction(GS_BLEND_FACTOR, GS_BLEND_INVFACTOR, transitionAlpha);
+    }
+
+    DrawSprite(mainRenderTextures[curRenderTarget], 0xFFFFFFFF,
+            renderFrameOffset.x, renderFrameOffset.y,
+            renderFrameOffset.x + renderFrameSize.x, renderFrameOffset.y + renderFrameSize.y);
 }
 
 const float yuvFullMat[][16] = {
@@ -617,8 +621,6 @@ void OBS::MainCaptureLoop()
 
     HANDLE hMatrix   = yuvScalePixelShader->GetParameterByName(TEXT("yuvMat"));
     HANDLE hScaleVal = yuvScalePixelShader->GetParameterByName(TEXT("baseDimensionI"));
-
-    HANDLE hTransitionTime = transitionPixelShader->GetParameterByName(TEXT("transitionTime"));
 
     //----------------------------------------
     // x264 input buffers
@@ -916,12 +918,12 @@ void OBS::MainCaptureLoop()
 
         if(bTransitioning)
         {
-            if(!lastRenderTexture)
+            if(!transitionTexture)
             {
-                lastRenderTexture = CreateTexture(baseCX, baseCY, GS_BGRA, NULL, FALSE, TRUE);
-                if(lastRenderTexture)
+                transitionTexture = CreateTexture(baseCX, baseCY, GS_BGRA, NULL, FALSE, TRUE);
+                if(transitionTexture)
                 {
-                    D3D10Texture *d3dTransitionTex = static_cast<D3D10Texture*>(lastRenderTexture);
+                    D3D10Texture *d3dTransitionTex = static_cast<D3D10Texture*>(transitionTexture);
                     D3D10Texture *d3dSceneTex = static_cast<D3D10Texture*>(mainRenderTextures[lastRenderTarget]);
                     GetD3D()->CopyResource(d3dTransitionTex->texture, d3dSceneTex->texture);
                 }
@@ -930,8 +932,8 @@ void OBS::MainCaptureLoop()
             }
             else if(transitionAlpha >= 1.0f)
             {
-                delete lastRenderTexture;
-                lastRenderTexture = NULL;
+                delete transitionTexture;
+                transitionTexture = NULL;
 
                 bTransitioning = false;
             }
@@ -939,27 +941,13 @@ void OBS::MainCaptureLoop()
 
         if(bTransitioning)
         {
-            transitionAlpha += float(fSeconds) * 5.0f;
+            EnableBlending(TRUE);
+            transitionAlpha += float(fSeconds)*5.0f;
             if(transitionAlpha > 1.0f)
                 transitionAlpha = 1.0f;
-
-            SetRenderTarget(transitionTexture);
-
-            Shader *oldPixelShader = GetCurrentPixelShader();
-            LoadPixelShader(transitionPixelShader);
-
-            transitionPixelShader->SetFloat(hTransitionTime, transitionAlpha);
-            LoadTexture(mainRenderTextures[curRenderTarget], 1U);
-
-            DrawSpriteEx(lastRenderTexture, 0xFFFFFFFF,
-                0, 0, baseSize.x, baseSize.y, 0.0f, 0.0f, 1.0f, 1.0f);
-
-            LoadTexture(nullptr, 1U);
-            LoadPixelShader(oldPixelShader);
         }
-
-        EnableBlending(FALSE);
-
+        else
+            EnableBlending(FALSE);
 
         //------------------------------------
         // render the mini view thingy
@@ -1061,9 +1049,13 @@ void OBS::MainCaptureLoop()
         //because outputSize can be trimmed by up to three pixels due to 128-bit alignment.
         //using the scale function with outputSize can cause slightly inaccurate scaled images
         if(bTransitioning)
+        {
+            BlendFunction(GS_BLEND_ONE, GS_BLEND_ZERO);
             DrawSpriteEx(transitionTexture, 0xFFFFFFFF, 0.0f, 0.0f, scaleSize.x, scaleSize.y, 0.0f, 0.0f, 1.0f, 1.0f);
-        else
-            DrawSpriteEx(mainRenderTextures[curRenderTarget], 0xFFFFFFFF, 0.0f, 0.0f, outputSize.x, outputSize.y, 0.0f, 0.0f, 1.0f, 1.0f);
+            BlendFunction(GS_BLEND_FACTOR, GS_BLEND_INVFACTOR, transitionAlpha);
+        }
+
+        DrawSpriteEx(mainRenderTextures[curRenderTarget], 0xFFFFFFFF, 0.0f, 0.0f, outputSize.x, outputSize.y, 0.0f, 0.0f, 1.0f, 1.0f);
 
         //------------------------------------
 

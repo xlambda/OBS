@@ -2864,6 +2864,7 @@ void OBS::ExportSceneCollection()
 
 void OBS::ResetSceneCollectionMenu()
 {
+	return;
     HMENU hmenuMain = GetMenu(hwndMain);
     HMENU hmenuSceneCollection = GetSubMenu(hmenuMain, 3);
     while (DeleteMenu(hmenuSceneCollection, 8, MF_BYPOSITION));
@@ -2872,6 +2873,7 @@ void OBS::ResetSceneCollectionMenu()
 
 void OBS::ResetProfileMenu()
 {
+	return;
     HMENU hmenuMain = GetMenu(hwndMain);
     HMENU hmenuProfiles = GetSubMenu(hmenuMain, 2);
     while (DeleteMenu(hmenuProfiles, 0, MF_BYPOSITION));
@@ -3328,7 +3330,16 @@ LRESULT CALLBACK OBS::OBSProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
                     App->ToggleReplayBuffer();
                     App->RefreshStreamButtons();
                     break;
-
+				case ID_LOGOUT:{
+					AppConfig->SetInt(TEXT("Login"), TEXT("auto"), 0);
+					ShowWindow(hwndMain, SW_HIDE);
+					INT_PTR t = OBSDialogBox(hinstMain, MAKEINTRESOURCE(IDD_LOGIN), hwndMain, (DLGPROC)OBS::LoginDialogProc);
+					if (t == 0)
+						ShowWindow(hwndMain, SW_SHOW);
+					else
+						PostQuitMessage(0);
+					break;
+				}
                 case ID_FILE_EXIT:
                 case ID_EXIT:
                     PostQuitMessage(0);
@@ -3386,8 +3397,12 @@ LRESULT CALLBACK OBS::OBSProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
                     break;
 
                 case ID_HELP_VISITWEBSITE:
-                    ShellExecute(NULL, TEXT("open"), TEXT("http://www.obsproject.com"), 0, 0, SW_SHOWNORMAL);
+                    ShellExecute(NULL, TEXT("open"), TEXT("http://polyv.net/"), 0, 0, SW_SHOWNORMAL);
                     break;
+
+				case ID_HELP_PREVIEW:
+					ShellExecute(NULL, TEXT("open"), AppConfig->GetString(TEXT("Publish"), TEXT("Preview")), 0, 0, SW_SHOWNORMAL);
+					break;
 
                 case ID_HELP_OPENHELP:
                     ShellExecute(NULL, TEXT("open"), TEXT("http://jp9000.github.io/OBS/"), 0, 0, SW_SHOWNORMAL);

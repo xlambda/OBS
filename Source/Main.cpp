@@ -171,8 +171,8 @@ void LogSystemStats()
     Log(TEXT("OBS Modules:"));
     Log(TEXT("Base Address     Module"));
 
-    LogModule(TEXT("OBS.exe"), hOBS);
-    LogModule(TEXT("OBSApi.dll"), hOBSApi);
+    //LogModule(TEXT("OBS.exe"), hOBS);
+    //LogModule(TEXT("OBSApi.dll"), hOBSApi);
 
     for (UINT i=0; i<App->NumPlugins(); i++) {
         const PluginInfo *info = App->GetPluginInfo(i);
@@ -557,7 +557,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             else
             {
                 SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, lpAppDataPath);
-                scat_n(lpAppDataPath, TEXT("\\OBS"), 4);
+                scat_n(lpAppDataPath, TEXT("\\polyv"), 6);
             }
 
             if(!OSFileExists(lpAppDataPath) && !OSCreateDirectory(lpAppDataPath))
@@ -685,6 +685,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         App = new OBS;
 
         HACCEL hAccel = LoadAccelerators(hinstMain, MAKEINTRESOURCE(IDR_ACCELERATOR1));
+
+		ShowWindow(hwndMain, SW_HIDE);
+		INT_PTR t = OBSDialogBox(hinstMain, MAKEINTRESOURCE(IDD_LOGIN), hwndMain, (DLGPROC)OBS::LoginDialogProc);
+		if (t == 0)
+			ShowWindow(hwndMain, SW_SHOW);
+		else
+			return 0;
+
 
         MSG msg;
         while(GetMessage(&msg, NULL, 0, 0))

@@ -845,6 +845,9 @@ DWORD WINAPI RTMPPublisher::CreateConnectionThread(RTMPPublisher *publisher)
     String strURL       = AppConfig->GetString(TEXT("Publish"), TEXT("URL"));
     String strPlayPath  = AppConfig->GetString(TEXT("Publish"), TEXT("PlayPath"));
 
+	//String strURL = TEXT("rtmp://urlive.videocc.net/record");
+	//String strPlayPath = TEXT("xsteach");
+
     strURL.KillSpaces();
     strPlayPath.KillSpaces();
 

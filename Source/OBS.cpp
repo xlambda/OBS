@@ -204,7 +204,7 @@ OBS::OBS()
     // log window class
     wc.lpszClassName = OBS_LOGWINDOW_CLASS;
     wc.lpfnWndProc = (WNDPROC)OBS::LogWindowProc;
-    wc.hIcon = LoadIcon(hinstMain, MAKEINTRESOURCE(IDI_ICON1));
+    wc.hIcon = LoadIcon(hinstMain, MAKEINTRESOURCE(IDI_ICON3));
     wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 
     if(!RegisterClass(&wc))
@@ -214,7 +214,7 @@ OBS::OBS()
     // main window class
     wc.lpszClassName = OBS_WINDOW_CLASS;
     wc.lpfnWndProc = (WNDPROC)OBSProc;
-    wc.hIcon = LoadIcon(hinstMain, MAKEINTRESOURCE(IDI_ICON1));
+    wc.hIcon = LoadIcon(hinstMain, MAKEINTRESOURCE(IDI_ICON3));
     wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
     wc.lpszMenuName = MAKEINTRESOURCE(IDR_MAINMENU);
 
@@ -793,21 +793,21 @@ OBS::OBS()
     ConfigureStreamButtons();
 
     ResizeWindow(false);
-    ShowWindow(hwndMain, SW_SHOW);
+    //ShowWindow(hwndMain, SW_SHOW);
 
     renderFrameIn1To1Mode = !!GlobalConfig->GetInt(L"General", L"1to1Preview", false);
 
     App->bAlwaysOnTop = !!GlobalConfig->GetInt(L"General", L"AlwaysOnTop");
     CheckMenuItem(GetMenu(hwndMain), ID_ALWAYSONTOP, (App->bAlwaysOnTop) ? MF_CHECKED : MF_UNCHECKED);
-    SetWindowPos(hwndMain, (App->bAlwaysOnTop) ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+    //SetWindowPos(hwndMain, (App->bAlwaysOnTop) ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
 
     // make sure sources listview column widths are as expected after obs window is shown
 
     ListView_SetColumnWidth(hwndSources,0,LVSCW_AUTOSIZE_USEHEADER);
     ListView_SetColumnWidth(hwndSources,1,LVSCW_AUTOSIZE_USEHEADER);
 
-    if (GlobalConfig->GetInt(L"General", L"ShowLogWindowOnLaunch") != 0)
-        PostMessage(hwndMain, WM_COMMAND, MAKEWPARAM(ID_SHOWLOG, 0), 0);
+    //if (GlobalConfig->GetInt(L"General", L"ShowLogWindowOnLaunch") != 0)
+    //    PostMessage(hwndMain, WM_COMMAND, MAKEWPARAM(ID_SHOWLOG, 0), 0);
 
     if (bStreamOnStart)
         PostMessage(hwndMain, WM_COMMAND, MAKEWPARAM(ID_STARTSTOP, 0), NULL);
@@ -1201,7 +1201,7 @@ void OBS::ResizeWindow(bool bRedrawRenderFrame)
     parts[0] = parts[1]-170;
     SendMessage(hwndTemp, SB_SETPARTS, 5, (LPARAM)parts);
 
-    int resetXPos = xStart+listControlWidth*2;
+	int resetXPos = xStart;
 
     //-----------------------------------------------------
 
@@ -1293,7 +1293,7 @@ void OBS::ResizeWindow(bool bRedrawRenderFrame)
 
     int listControlHeight = yPos-yStart-textControlHeight;
 
-    xPos  = xStart;
+	xPos = xStart + listControlWidth * 2;
     yPos  = yStart;
 
     SetWindowPos(GetDlgItem(hwndMain, ID_SCENES_TEXT), NULL, xPos+2, yPos, listControlWidth-controlPadding-2, textControlHeight, flags);
@@ -1303,7 +1303,7 @@ void OBS::ResizeWindow(bool bRedrawRenderFrame)
     xPos += listControlWidth;
 
     yPos += textControlHeight;
-    xPos  = xStart;
+	xPos = xStart + listControlWidth * 2;
 
     //-----------------------------------------------------
 
@@ -1606,8 +1606,8 @@ void OBS::ReloadIniSettings()
 
     bKeepRecording = AppConfig->GetInt(TEXT("Publish"), TEXT("KeepRecording")) != 0;
 
-    if (!minimizeToIcon && !IsWindowVisible(hwndMain))
-        ShowWindow(hwndMain, SW_SHOW);
+   // if (!minimizeToIcon && !IsWindowVisible(hwndMain))
+   //     ShowWindow(hwndMain, SW_SHOW);
 
     ConfigureStreamButtons();
 
@@ -2007,7 +2007,7 @@ BOOL OBS::SetNotificationAreaIcon(DWORD dwMessage, int idIcon, const String &too
 BOOL OBS::ShowNotificationAreaIcon()
 {
     BOOL result = FALSE;
-    int idIcon = (bRunning && !bTestStream) ? IDI_ICON2 : IDI_ICON1;
+    int idIcon = (bRunning && !bTestStream) ? IDI_ICON3 : IDI_ICON3;
 
     if (!bNotificationAreaIcon)
     {

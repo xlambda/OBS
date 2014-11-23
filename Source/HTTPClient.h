@@ -21,6 +21,6 @@
 
 BOOL HTTPGetFile (CTSTR url, CTSTR outputPath, CTSTR extraHeaders, int *responseCode);
 
-String HTTPGetString (CTSTR url, CTSTR extraHeaders, int *responseCode);
+String HTTPGetString(CTSTR url, CTSTR extraHeaders, int *responseCode, String verb = TEXT("GET"));
 
 String CreateHTTPURL(String host, String path, String extra=String(), bool secure=false);

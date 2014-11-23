@@ -20,8 +20,6 @@
 #include "Main.h"
 #include <time.h>
 
-#include "DataPacketHelpers.h"
-
 
 time_t GetMacTime()
 {
@@ -289,30 +287,28 @@ public:
     UINT frameTime = 0;
     UINT sampleRateHz = 0;
     UINT width = 0, height = 0;
+    DataPacket videoHeaders;
+    List<BYTE> AACHeader;
     UINT maxBitRate = 0;
+    DataPacket sei;
     void CopyMetadata()
     {
         frameTime = App->GetFrameTime();
         sampleRateHz = App->GetSampleRateHz();
         App->GetOutputSize(width, height);
+        App->GetVideoHeaders(videoHeaders);
 
         //-------------------------------------------
         // get AAC headers if using AAC
+        if (!bMP3)
+        {
+            DataPacket data;
+            App->GetAudioHeaders(data);
+            AACHeader.CopyArray(data.lpPacket + 2, data.size - 2);
+        }
         maxBitRate = fastHtonl(App->GetAudioEncoder()->GetBitRate() * 1000);
 
-        InitBufferedPackets();
-    }
-
-    decltype(GetBufferedSEIPacket()) sei = GetBufferedSEIPacket();
-    decltype(GetBufferedAudioHeadersPacket()) audioHeaders = GetBufferedAudioHeadersPacket();
-    decltype(GetBufferedVideoHeadersPacket()) videoHeaders = GetBufferedVideoHeadersPacket();
-
-    void InitBufferedPackets()
-    {
-        sei.InitBuffer();
-        if (!bMP3)
-            audioHeaders.InitBuffer();
-        videoHeaders.InitBuffer();
+        App->GetVideoEncoder()->GetSEI(sei);
     }
 
     ~MP4FileStream()
@@ -386,9 +382,8 @@ public:
             /*esDecoderOut.OutputByte(0x80); //some stuff that no one should probably care about
             esDecoderOut.OutputByte(0x80);
             esDecoderOut.OutputByte(0x80);*/
-            assert(audioHeaders.size >= 2);
-            esDecoderOut.OutputByte(audioHeaders.size - 2);
-            esDecoderOut.Serialize(audioHeaders.lpPacket + 2, audioHeaders.size - 2);
+            esDecoderOut.OutputByte(AACHeader.Num());
+            esDecoderOut.Serialize((LPVOID)AACHeader.Array(), AACHeader.Num());
         }
 
 
@@ -826,8 +821,6 @@ public:
 
     virtual void AddPacket(const BYTE *data, UINT size, DWORD timestamp, DWORD /*pts*/, PacketType type) override
     {
-        InitBufferedPackets();
-
         UINT64 offset = fileOut.GetPos();
 
         if(initialTimeStamp == -1 && data[0] != 0x17)

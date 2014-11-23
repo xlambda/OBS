@@ -22,6 +22,7 @@
     <ProjectGuid>{11A35235-DD48-41E2-8F40-825C78024BC0}</ProjectGuid>
     <RootNamespace>OBSApi</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>PolyvApi</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
