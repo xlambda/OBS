@@ -5,8 +5,10 @@
 
 #include <windows.h>
 #include "Wincrypt.h"
+#include "time.h"
 
 #include "rapidjson/document.h"
+#include "rapidjson/writer.h"
 
 String md5(String s){
 	HCRYPTPROV hProv = NULL;
@@ -57,17 +59,22 @@ bool login(String account, String pwd, HWND hwnd=NULL)
 {
 	int responseCode;
 	//String timestamp = FormattedString(TEXT("%u"), OSGetTime());
-	String timestamp = TEXT("1413519583909");
-	String sign = md5(String(TEXT("live.polyv.net")) + account + pwd + timestamp);
+	time_t t;
+	time(&t);
+	String timestamp = FormattedString(TEXT("%u"), t);
+	String schoolId = TEXT("test");
+	String sign = md5(String(TEXT("jianwangxiao_client")) + schoolId + account + pwd + timestamp);
 	String url;
-	url = String(TEXT("http://live.polyv.net/api/v1/teacher_login.json"));
-	String params = String(TEXT("number=")) + account + TEXT("&passwd=")
-		+ pwd + TEXT("&timestamp=") + timestamp + TEXT("&sign=") + sign;
+	url = String(TEXT("http://api.jianwangxiao.com/client/v1/teacher_login"));
+	String params = FormattedString(TEXT("schoolId=%s&email=%s&passwd=%s&timestamp=%s&sign=%s"),
+		schoolId.Array(), account.Array(), pwd.Array(), timestamp.Array(), sign.Array());
 	//url += "?number=";
 	String extraheaders = FormattedString(TEXT("Content-Type: application/x-www-form-urlencoded\r\nContent-Length:%d"),
 		params.Length());
 	url = url + TEXT("?") + params;
 	String s = HTTPGetString(url, NULL, &responseCode, TEXT("GET"));
+	if (!s.Length())
+		return false;
 	rapidjson::Document d;
 	int len = tstr_to_utf8_datalen(s);
 	char* p = new char[len];
@@ -80,9 +87,12 @@ bool login(String account, String pwd, HWND hwnd=NULL)
 		MessageBox(hwnd, utf8_createTstr(d["msg"].GetString()), utf8_createTstr(d["code"].GetString()), MB_OK);
 		return false;
 	}
-	AppConfig->SetString(TEXT("Publish"), TEXT("URL"), utf8_createTstr(d["url"].GetString()));
-	AppConfig->SetString(TEXT("Publish"), TEXT("PlayPath"), utf8_createTstr(d["stream"].GetString()));
-	AppConfig->SetString(TEXT("Publish"), TEXT("Preview"), utf8_createTstr(d["preview"].GetString()));
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	rapidjson::Value& courses = d["courses"];
+	courses.Accept(writer);
+	AppConfig->SetString(TEXT("Courses"), TEXT("json"), utf8_createTstr(buffer.GetString()));
+	delete[] p;
 	return true;
 }
 

@@ -537,3 +537,6 @@ Login.Password="密码"
 Login.RememberPassword="记住密码"
 Login.AutoLogin="自动登录"
 Login.Login="登录"
+
+Select="课程选择"
+Select.Cources="选择课程"

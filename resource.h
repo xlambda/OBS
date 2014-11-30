@@ -44,6 +44,8 @@
 #define IDD_SETTINGS_QSV                150
 #define IDD_GLOBAL_SOURCES_IMPORT       151
 #define IDD_LOGIN                       154
+#define IDD_DIALOG2                     155
+#define IDD_SELECT                      155
 #define IDC_SETTINGSLIST                1006
 #define IDC_SUBDIALOG                   1007
 #define IDC_MODE                        1008
@@ -449,7 +451,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        155
+#define _APS_NEXT_RESOURCE_VALUE        156
 #define _APS_NEXT_COMMAND_VALUE         40087
 #define _APS_NEXT_CONTROL_VALUE         1210
 #define _APS_NEXT_SYMED_VALUE           101

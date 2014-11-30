@@ -166,6 +166,9 @@
     <ClCompile Include="Source\Login.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Select.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\D3D10System.h">

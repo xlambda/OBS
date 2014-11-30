@@ -988,6 +988,17 @@ BEGIN
     CONTROL         "Login.AutoLogin",IDC_AUTOLOGIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,137,63,106,20
 END
 
+IDD_SELECT DIALOGEX 0, 0, 309, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Select.OK",IDOK,198,156,50,14
+    PUSHBUTTON      "Select.Cancel",IDCANCEL,252,156,50,14
+    LTEXT           "Select.Cources",IDC_STATIC,31,20,103,11
+    LTEXT           "Select.Curriculums",IDC_STATIC,170,23,74,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1003,6 +1014,14 @@ BEGIN
         RIGHTMARGIN, 270
         TOPMARGIN, 7
         BOTTOMMARGIN, 127
+    END
+
+    IDD_SELECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
     END
 END
 #endif    // APSTUDIO_INVOKED

@@ -3551,7 +3551,12 @@ LRESULT CALLBACK OBS::OBSProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
                     App->RefreshStreamButtons();
                     break;
 
-                case ID_STARTSTOP:
+				case ID_STARTSTOP:
+				{
+					INT_PTR t = OBSDialogBox(hinstMain, MAKEINTRESOURCE(IDD_SELECT), hwndMain, (DLGPROC)OBS::SelectDialogProc);
+					if (t != 0)
+						break;
+				}
                     App->RefreshStreamButtons(true);
                     App->ToggleCapturing();
                     App->RefreshStreamButtons();
