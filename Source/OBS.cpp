@@ -672,6 +672,7 @@ OBS::OBS()
     hHotkeyThread = OSCreateThread((XTHREAD)HotkeyThread, NULL);
 
 #ifndef OBS_DISABLE_AUTOUPDATE
+#if 0
     ULARGE_INTEGER lastUpdateTime;
     ULARGE_INTEGER currentTime;
     FILETIME systemTime;
@@ -691,6 +692,7 @@ OBS::OBS()
         GlobalConfig->SetInt(TEXT("General"), OBS_CONFIG_UPDATE_KEY, (int)currentTime.QuadPart);
         OSCloseThread(OSCreateThread((XTHREAD)CheckUpdateThread, (LPVOID)0));
     }
+#endif
 #endif
 
     // TODO: Should these be stored in the config file?

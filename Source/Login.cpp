@@ -84,7 +84,7 @@ bool login(String account, String pwd, HWND hwnd=NULL)
 		return false;
 	}
 	if (strcmp(d["status"].GetString(), "ok") != 0){
-		MessageBox(hwnd, utf8_createTstr(d["msg"].GetString()), utf8_createTstr(d["code"].GetString()), MB_OK);
+		MessageBox(hwnd, utf8_createTstr(d["error"].GetString()), utf8_createTstr(d["error"].GetString()), MB_OK);
 		return false;
 	}
 	rapidjson::StringBuffer buffer;
